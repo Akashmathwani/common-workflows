@@ -12,8 +12,8 @@ on:
   status: {}
 jobs:
   automerge:
-    if: startsWith(${{ github.event.pull_request.base.ref }}, 'refs/tags')
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.base.ref == 'master' }}
     steps:
       - id: automerge
         name: automerge
