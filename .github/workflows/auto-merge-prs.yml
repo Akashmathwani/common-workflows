@@ -3,13 +3,6 @@ on:
   pull_request:
     types:
       - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
   pull_request_review:
     types:
       - submitted
@@ -19,12 +12,9 @@ on:
   status: {}
 jobs:
   automerge:
+    if: startsWith(${{ github.event.pull_request.base.ref }}, 'refs/tags')
     runs-on: ubuntu-latest
     steps:
-      - name: Check base branch
-        id: check_base_branch
-        run: echo "::set-output name=should_merge::$(echo ${{ github.event.pull_request.base.ref }} | grep -q '^release/'; echo $?)"
-
       - id: automerge
         name: automerge
         uses: "pascalgn/automerge-action@v0.16.2"
