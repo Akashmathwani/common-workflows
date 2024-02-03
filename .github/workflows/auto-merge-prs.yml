@@ -21,6 +21,10 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
+      - name: Check base branch
+        id: check_base_branch
+        run: echo "::set-output name=should_merge::$(echo ${{ github.event.pull_request.base.ref }} | grep -q '^release/'; echo $?)"
+
       - id: automerge
         name: automerge
         uses: "pascalgn/automerge-action@v0.16.2"
